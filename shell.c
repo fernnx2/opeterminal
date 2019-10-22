@@ -30,7 +30,7 @@ char *input,*input1;
 int exitflag = 0;
 int filepid,fd[2];
 char cwd[BUFSIZE];
-char* argval[ARGMAX]; // our local argc, argv
+char* argval[ARGMAX]; 
 int argcount = 0,inBackground = 0;
 int externalIn=0,externalOut=0;
 char inputfile[INPBUF],outputfile[INPBUF];
@@ -79,18 +79,18 @@ void getInput()
     }
     free(input);
 }
-/* Just a fancy name printing function*/
+
 void nameFile(struct dirent* name,char* followup)
 {
-    if(name->d_type == DT_REG)          // regular file
+    if(name->d_type == DT_REG)         
     {
         printf("%s%s%s",BLUE, name->d_name, followup);
     }
-    else if(name->d_type == DT_DIR)    // a directory
+    else if(name->d_type == DT_DIR)   
     {
         printf("%s%s/%s",GREEN, name->d_name, followup);
     }
-    else                              // unknown file types
+    else                           
     {
         printf("%s%s%s",CYAN, name->d_name, followup);
     }
@@ -104,7 +104,7 @@ void function_ls()
     int listn = scandir(".", &listr, 0, alphasort);
     if (listn >= 0)
     {
-        printf("%s+--- Total %d objects in this directory\n",CYAN,listn-2);
+        printf("%s+--- Total de objetos en el directorio\n",CYAN,listn-2);
         for(i = 0; i < listn; i++ )
         {
             if(strcmp(listr[i]->d_name,".")==0 || strcmp(listr[i]->d_name,"..")==0)
@@ -184,7 +184,7 @@ void runprocess(char * cli, char* args[], int count)
         ret = execvp(loc_sort, args);
         if(ret==-1)
         {
-            perror("+--- Error in running executable ");
+            perror("+--- Error al correr el ejecutable. ");
             exit(0);
         }
         cmd = strtok(NULL, ":\r\n");
@@ -203,7 +203,7 @@ void pipe_dup(int n, instruction* command)
         in = open(inputfile, O_RDONLY); 
         if(in < 0)
         {
-            perror("+--- Error in executable : input file ");
+            perror("+--- Error en el ejecutable ");
         }
     }
    
@@ -248,7 +248,7 @@ void pipe_dup(int n, instruction* command)
 }
 
 
-/* executables like ./a.out */
+/* executables */
 void executable()
 {
     instruction command[INPBUF];
@@ -307,7 +307,7 @@ void executable()
         }
         else
         {
-            printf("+--- Process running in inBackground. PID:%d\n",filepid);
+            printf("+--- Process corriendo en background. PID:%d\n",filepid);
         }
     }
     filepid = 0;
